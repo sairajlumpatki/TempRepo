@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Include your stylesheet here -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #cfeef1;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        position: relative;
+        /* Added to make the position absolute work */
+      }
+
+      .add-project-container {
+        width: 2000px;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        margin-right: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        background-color: #4caf50;
+        height: 50px;
+        margin-top: 65px;
+        text-align: center;
+        color: white;
+        line-height: 100px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      .toggle-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .toggle-label {
+        margin-right: 10px;
+      }
+
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        border-radius: 34px;
+        transition: 0.4s;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.4s;
+      }
+
+      input:checked + .toggle-slider {
+        background-color: #4caf50;
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(26px);
+      }
+
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .header {
+        background-color: #4caf50;
+        color: #fff;
+        margin-top: 50px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        padding-top: 5px;
+        line-height: 100px;
+      }
+
+      .projectType {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .myprojects {
+        padding: 6px 12px; /* Adjusted padding */
+        background-color: #4caf50;
+        margin-bottom: 550px;
+        margin-left: 15px;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px; /* Adjusted font size */
+        width: auto; /* Ensures button width adjusts to content */
+      }
+    </style>
+
+    <title>Add Project</title>
+  </head>
+
+  <body>
+    <button class="myprojects" onclick="viewProjects()">
+      Available Projects
+    </button>
+
+    <div class="add-project-container">
+      <div class="header">Contribute to the Community</div>
+
+      <form id="projectForm" enctype="multipart/form-data">
+        <label for="projectName">Project Title:</label>
+        <input type="text" id="projectName" name="projectName" required />
+
+        <label for="projectType">Project Type:</label>
+        <select
+          id="projectType"
+          name="projectType"
+          class="projectType"
+          required
+        >
+          <option value="research">Research/Review Paper</option>
+          <option value="source-code-file">Source Code Files</option>
+          <option value="documentation">Project Documentation</option>
+          <option value="images">Images</option>
+          <option value="prototype">Prototype Model</option>
+        </select>
+
+        <label for="contactNumber">Contact Number:</label>
+        <input
+          type="text"
+          minlength="10"
+          min="10"
+          max="10"
+          id="contactNumber"
+          name="contactNumber"
+          required
+        />
+
+        <label for="files">Upload Files:</label>
+        <input type="file" id="files" name="files" required />
+
+        <label for="expectedPrice">Expected Price:</label>
+        <input type="text" id="expectedPrice" name="expectedPrice" required />
+
+        <div class="toggle-container">
+          <label class="toggle-label" for="enableDownload"
+            >Enable Download ?</label
+          >
+          <div class="toggle-switch">
+            <input type="checkbox" id="enableDownload" name="enableDownload" />
+            <div class="toggle-slider"></div>
+          </div>
+        </div>
+
+        <button type="button" onclick="submitForm()">
+          Submit Contribution
+        </button>
+      </form>
+    </div>
+
+    <script>
+      function viewProjects() {
+        window.location.href = "AvailableProjects.html";
+      }
+    
+      function submitForm() {
+        const form = document.getElementById("projectForm");
+        const formData = new FormData(form);
+        const contactNumberInput = formData.get("contactNumber");
+        const filesInput = document.getElementById("files");
+    
+        // Regular expression to match 10 digit numbers starting with 7, 8, or 9
+        const mobileNumberPattern = /^[7-9]\d{9}$/;
+    
+        // Check if any of the fields are empty
+        if (!formData.get("projectName") || !formData.get("projectType") || !formData.get("contactNumber") || !filesInput.files.length || !formData.get("expectedPrice")) {
+          alert("All fields are mandatory. Please fill in all the required fields.");
+          return; // Prevent form submission
+        }
+    
+        // Check if mobile number is valid
+        if (!mobileNumberPattern.test(contactNumberInput)) {
+          alert("Mobile number must be 10 digits and should start with 7, 8, or 9.");
+          return; // Prevent form submission
+        }
+    
+        fetch("http://127.0.0.1:3000/submitcontribution", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            if (data.success) {
+              alert("Contribution submitted successfully!");
+              window.location.href = "welcome.html"; // Redirect to welcome page on success
+            }
+          })
+          .catch((error) => {
+            console.error("Error during form submission:", error);
+            // Handle the error
+          });
+      }
+    </script>
+    
+  </body>
+</html>

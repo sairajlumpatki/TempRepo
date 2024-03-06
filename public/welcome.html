@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #cfeef1;
+      }
+
+      header {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 20px 0;
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      nav ul li {
+        display: inline;
+        margin: 0 20px;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        color: #ffd700;
+      }
+
+      .hero {
+        background-image: linear-gradient(to right bottom, #cfeef1, #cfeef1);
+        height: 40vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 30px;
+
+        color: #04bb1d;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 400px;
+        color: #04bb1d;
+      }
+
+      .btn {
+        background-color: #fff;
+        color: #333;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #ffd700;
+        color: #333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #cfeef1;
+      }
+
+      header {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 20px 0;
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      nav ul li {
+        display: inline;
+        margin: 0 20px;
+      }
+
+      nav ul li button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      nav ul li button:hover {
+        background-color: #45a049;
+      }
+
+      .hero {
+        background-image: linear-gradient(to right bottom, #cfeef1, #cfeef1);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .btn {
+        background-color: #fff;
+        color: #333;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #ffd700;
+        color: #333;
+      }
+
+      .section-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-container h2 {
+        color: #04bb1d;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .section-container p,
+      .section-container address {
+        font-size: 1.2rem;
+        color: #333;
+      }
+
+      /* Horizontal separation */
+      #about,
+      #contact,
+      #address {
+        display: flex;
+        justify-content: center;
+      }
+      .wrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <button class="viewProjects" onclick="viewProjects()">
+              Available Projects
+            </button>
+          </li>
+          <li><button onclick="viewProfile()">Profile</button></li>
+          <li>
+            <button onclick="viewContributions()">My Contributions</button>
+          </li>
+          <li>
+            <button onclick="viewMessages()">Messages / Feedbacks</button>
+          </li>
+          <li><button onclick="viewDownloads()">My Downloads</button></li>
+          <li><button class="logout" onclick="logOut()">Log Out</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero" style="height: 60vh; position: relative">
+      <div class="hero-content" style="position: relative; top: 100px">
+        <h1>Welcome to "Project Community" !!!</h1>
+        <i
+          ><b><p>Feel The Joy of Sharing...</p></b></i
+        >
+      </div>
+    </section>
+    <!-- About Us section -->
+    <div class="wrapper">
+      <section id="about">
+        <div class="section-container" style="margin: 10px">
+          <h2>About Us</h2>
+          <p>
+            Online project sharing portal.<br />Trying to expand the boundries
+            <br />of knowledge by sharing the work of <br />various people !!
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact Us section -->
+      <section id="contact">
+        <div class="section-container" style="margin: 10px">
+          <h2>Contact Us</h2>
+          <p>
+            For inquiries,<br />
+            please contact us at <br />
+            <a href="mailto:info@example.com">info@example.com</a>.
+          </p>
+        </div>
+      </section>
+
+      <!-- Address section -->
+      <section id="address">
+        <div class="section-container" style="margin: 10px">
+          <h2>Our Address</h2>
+          <address>
+            123 New Street<br />
+            San Fransisco, California, 152 079<br />
+            USA
+          </address>
+        </div>
+      </section>
+
+      <section id="address">
+        <div class="section-container" style="margin: 10px">
+          <h2>Customer Reviews</h2>
+          <address>
+            <i
+              >"Nice team to work with. <br />
+              Hardworking employees."</i
+            >
+          </address>
+        </div>
+      </section>
+    </div>
+
+    <!-- More sections -->
+    <!-- Add more sections as needed -->
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2024 ProjectCommunity. All rights reserved.</p>
+    </footer>
+    <script>
+      function viewProjects() {
+        window.location.href = "AvailableProjects.html";
+      }
+      function viewProfile() {
+        window.location.href = "ContributorProfile.html";
+      }
+
+      function viewContributions() {
+        window.location.href = "MyContributions.html";
+      }
+
+      function viewMessages() {
+        window.location.href = "Feedbacks.html";
+      }
+
+      function logOut() {
+        window.location.href = "login.html";
+      }
+
+      function viewDownloads() {
+        window.location.href = "MyDownloads.html";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Registration</title>
+    <script>
+        function registerUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+            const qualification = document.getElementById('education').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+        
+            fetch('http://127.0.0.1:3000/auth/register', {  
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password, qualification }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Registration successful. Redirecting to login page.");
+                        window.location.href = "login.html";
+                    } else {
+                        alert("Registration failed. " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during registration:', error);
+                    alert('Error during registration. Please try again.');
+                });
+        }
+    </script>
+    <style>
+        h1{
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+        }
+        body {
+            background-color: #cfeef1;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="registrationForm" onsubmit="registerUser(); return false;">
+        <h1>Get Registered</h1>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="education">Educational Qualification:</label>
+        <input type="text" id="education" name="education" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Password must contain at least one uppercase letter, one lowercase letter, one numeric, and one special character. Minimum length is 8 characters."
+            required>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <button type="submit">Register</button>
+
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </form>
+</body>
+
+</html>
