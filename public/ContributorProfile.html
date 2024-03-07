@@ -11,9 +11,10 @@
         margin: 0;
         padding: 0;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         min-height: 100vh;
+        flex-direction: column;
       }
 
       .menu {
@@ -44,7 +45,8 @@
         text-align: center;
         padding: 25px;
         margin-top: 10px;
-        margin-bottom: 875px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
       }
 
       .logout {
@@ -70,6 +72,31 @@
         border-radius: 4px;
         cursor: pointer;
       }
+
+      /* Added style for the project grid */
+      #projectGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        max-width: 900px; /* Adjusted width */
+        width: 90%; /* Adjusted width */
+        padding: 30px;
+        margin: 60px auto;
+        margin-top: 0px;
+      }
+
+      .grid-item {
+        background-color: hsl(256, 19%, 46%);
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        flex: 1;
+        font-style: italic;
+      }
+
+      .details {
+        margin-bottom: 10px;
+      }
     </style>
   </head>
   <body>
@@ -83,62 +110,76 @@
       <button onclick="viewDownloads()">My Downloads</button>
     </div>
 
-    <div class="header">User Profile</div>
-    <script>
-      async function fetchContributorProfiles() {
-        try {
-          const response = await fetch("http://127.0.0.1:3000/fetchcontributorprofile");
-          const data = await response.json();
+    <div class="header">All Contributors</div>
 
-          if (data.success) {
-            const profiles = data.profiles;
-            const profileGrid = document.getElementById("profile-grid");
+    <!-- Added the projectGrid div -->
+    <div id="projectGrid">
+      <script>
+        fetch("http://127.0.0.1:3000/fetchcontributorprofile")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.success) {
+              const profiles = data.profiles;
+              const projectGrid = document.getElementById("projectGrid");
 
-            profiles.forEach((profile) => {
-              const profileCard = document.createElement("div");
-              profileCard.classList.add("profile-card");
+              profiles.forEach((profile) => {
+                const gridItem = document.createElement("div");
+                gridItem.className = "grid-item";
 
-              profileCard.innerHTML = `
-              <h3>${profile.name}</h3>
-              <p>Contact Number: ${profile.contactNumber}</p>
-              <p>Educational Qualification: ${profile.educationalQualification}</p>
-              <p>Email: ${profile.email}</p>
-            `;
+                const detailsContainer = document.createElement("div");
+                detailsContainer.className = "details";
 
-              profileGrid.appendChild(profileCard);
-            });
-          } else {
-            console.error(
-              "Failed to fetch contributor profiles:",
-              data.message
-            );
-          }
-        } catch (error) {
-          console.error("Error fetching contributor profiles:", error);
+                const contributorName = document.createElement("h3");
+                contributorName.textContent = `Contributor Name: ${profile.name}`;
+
+                const educationalQualification = document.createElement("p");
+                educationalQualification.textContent = `Educational Qualification: ${profile.educationalQualification}`;
+
+                const email = document.createElement("p");
+                email.textContent = `Email: ${profile.email}`;
+
+                detailsContainer.appendChild(contributorName);
+                detailsContainer.appendChild(educationalQualification);
+                detailsContainer.appendChild(email);
+
+                gridItem.appendChild(detailsContainer);
+                projectGrid.appendChild(gridItem);
+              });
+            } else {
+              console.error(
+                "Failed to fetch contributor profiles:",
+                data.message
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching contributor profiles:", error);
+          });
+
+        function viewProjects() {
+          window.location.href = "AvailableProjects.html";
         }
-      }
+        function viewContributions() {
+          window.location.href = "MyContributions.html";
+        }
 
-      // Call the function to fetch contributor profiles when the page loads
-      fetchContributorProfiles();
+        function viewMessages() {
+          window.location.href = "Feedbacks.html";
+        }
 
-      function viewProjects() {
-        window.location.href = "AvailableProjects.html";
-      }
-      function viewContributions() {
-        window.location.href = "MyContributions.html";
-      }
+        function viewDownloads() {
+          window.location.href = "MyDownloads.html";
+        }
 
-      function viewMessages() {
-        window.location.href = "Feedbacks.html";
-      }
-
-      function viewDownloads() {
-        window.location.href = "MyDownloads.html";
-      }
-
-      function logOut() {
-        window.location.href = "login.html";
-      }
-    </script>
+        function logOut() {
+          window.location.href = "login.html";
+        }
+      </script>
+    </div>
   </body>
 </html>

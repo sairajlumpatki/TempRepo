@@ -12,8 +12,9 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Center items vertically */
             min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
         }
 
         .menu {
@@ -23,7 +24,7 @@
         }
 
         .menu button {
-            background-color: #4CAF50;
+            background-color: #4caf50;
             color: #fff;
             padding: 8px;
             border: none;
@@ -37,30 +38,35 @@
         }
 
         .header {
-            background-color: #4CAF50;
+            background-color: #4caf50;
             color: #fff;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
             padding: 25px;
-            margin-top: 10px;
-            margin-bottom: 875px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 10px; /* Adjusted top position */
+            left: 50%; /* Shift header to the mid position */
+            transform: translateX(-50%); /* Center header horizontally */
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
-            max-width: 300px;
-            width: 70%;
+            max-width: 900px; /* Adjusted width */
+            width: 90%; /* Adjusted width */
             padding: 30px;
-            margin-bottom: 450px;
+            margin: 60px auto; 
+            margin-top: 90px;
         }
 
         .grid-item {
             border: 1px solid #ccc;
             border-radius: 8px;
             overflow: hidden;
+            background-color: hwb(70 15% 45%);
         }
 
         .grid-item img {
@@ -75,18 +81,24 @@
 
         .grid-item h3 {
             margin: 0;
-            color: #333;
+            color: #080808;
+            font-style: italic;
+
         }
 
         .grid-item p {
-            color: #777;
-            margin: 5px 0;
+            color: #080808;
+            font-weight: 100px;
+            font-style: italic;
+    
+        
         }
+
         .logout {
             position: absolute;
             top: 10px;
             left: 10px;
-            background-color: #4CAF50;
+            background-color: #4caf50;
             color: #fff;
             padding: 8px;
             border: none;
@@ -98,7 +110,7 @@
             position: absolute;
             top: 10px;
             left: 85px;
-            background-color: #4CAF50;
+            background-color: #4caf50;
             color: #fff;
             padding: 8px;
             border: none;
@@ -108,34 +120,91 @@
     </style>
 </head>
 <body>
-    <button class="viewProjects" onclick="viewProjects()">Available Projects</button>
-    <button class="logout" onclick="logOut()">Log Out</button>
-    <div class="menu">
-        <button onclick="viewProfile()">Profile</button>
-        <button onclick="viewMessages()">Messages / Feedbacks</button>
-        <button onclick="viewDownloads()">My Downloads</button>
-    </div>
+<div id="projectGrid" class="grid-container"></div>
 
-    <div class="header">My Contributions</div>
-    <script>
-          function viewProjects(){
-            window.location.href="AvailableProjects.html"
-        }
-        function viewProfile(){
-            window.location.href="ContributorProfile.html";
-        }
+<button class="viewProjects" onclick="viewProjects()">Available Projects</button>
+<button class="logout" onclick="logOut()">Log Out</button>
+<div class="menu">
+    <button onclick="viewProfile()">All Contributors</button>
+    <button onclick="viewMessages()">Messages / Feedbacks</button>
+    <button onclick="viewDownloads()">My Downloads</button>
+</div>
 
-        function viewMessages(){
-            window.location.href="Feedbacks.html";
-        }
+<div class="header">My Contributions</div>
 
-        function viewDownloads(){
-            window.location.href="MyDownloads.html";
-        }
+<script>
+    fetch("http://127.0.0.1:3000/fetchmycontributions")
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data.success) {
+                const myContributions = data.myContributions;
 
-        function logOut(){
-            window.location.href="login.html"
-        }
-    </script>
+                const projectGrid = document.getElementById("projectGrid");
+
+                myContributions.forEach((contribution) => {
+                    const gridItem = document.createElement("div");
+                    gridItem.className = "grid-item";
+
+                    const detailsContainer = document.createElement("div");
+                    detailsContainer.className = "details";
+
+                    const projectName = document.createElement("h3");
+                    projectName.textContent = `Project Name: ${contribution.projectName}`;
+
+                    const projectType = document.createElement("p");
+                    projectType.textContent = `Project Type: ${contribution.projectType}`;
+
+                    const contactNumber = document.createElement("p");
+                    contactNumber.textContent = `Contact Number: ${contribution.contactNumber}`;
+
+                    const expectedPrice = document.createElement("p");
+                    expectedPrice.textContent = `Expected Price: ${contribution.expectedPrice}`;
+
+                    const files = document.createElement("p");
+                    files.textContent = `Files: ${contribution.files}`;
+
+                    detailsContainer.appendChild(projectName);
+                    detailsContainer.appendChild(projectType);
+                    detailsContainer.appendChild(contactNumber);
+                    detailsContainer.appendChild(expectedPrice);
+                    detailsContainer.appendChild(files);
+
+                    gridItem.appendChild(detailsContainer);
+                    projectGrid.appendChild(gridItem);
+                });
+            } else {
+                console.error("Failed to fetch My Contributions:", data.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching My Contributions:", error);
+        });
+
+    function viewProjects() {
+        window.location.href = "AvailableProjects.html";
+    }
+
+    function viewProfile() {
+        window.location.href = "ContributorProfile.html";
+    }
+
+    function viewMessages() {
+        window.location.href = "Feedbacks.html";
+    }
+
+    function viewDownloads() {
+        window.location.href = "MyDownloads.html";
+    }
+
+    function logOut() {
+        
+        window.location.href = "login.html";
+    }
+</script>
 </body>
 </html>

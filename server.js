@@ -131,6 +131,7 @@ appExpress.get('/fetchprojects', async (req, res) => {
             projects.push({
                 id: doc.id,
                 projectName: projectData.projectName,
+                contributorName:projectData.contributorName,
                 contactNumber: projectData.contactNumber,
                 projectType: projectData.projectType,
                 enableDownload: projectData.enableDownload,
@@ -187,14 +188,16 @@ appExpress.get('/fetchmycontributions', async (req, res) => {
             const contributionData = doc.data();
             myContributions.push({
                 id: doc.id,
-                name: contributionData.name,
-                email: contributionData.email,
-                projectTitle: contributionData.projectTitle,
+                projectName: contributionData.projectName,
                 projectType: contributionData.projectType,
+                contactNumber: contributionData.contactNumber,
                 expectedPrice: contributionData.expectedPrice,
-                // Add other fields as needed
+                files: contributionData.files
+               
             });
         });
+
+        console.log('My Contributions:', myContributions);
 
         res.json({ success: true, myContributions });
     } catch (error) {
